@@ -4,7 +4,7 @@ const TodoAdd = (props) => {
     const {addNewTodo} = props;
     
 
-    const [valueInput, setValueInput] = useState("Eric");
+    const [valueInput, setValueInput] = useState("");
     const handleClick = () => {
         addNewTodo(valueInput);
         setValueInput("");
@@ -18,7 +18,6 @@ const TodoAdd = (props) => {
             <input type="text" onChange = {(event) => {handleOnChange(event.target.value)}}
             value= {valueInput}/>
             <button type="button" onClick={handleClick}>Add</button>
-            <div> This Is state {valueInput}</div>
         </div>
         
     )

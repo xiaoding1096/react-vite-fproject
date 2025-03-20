@@ -13,9 +13,9 @@ const App = () => {
     zip : 123456,
   }
   const [todoList, setTodoList] = useState([
-    {id: 1, name: "Learning React"},
-    {id: 2, name: "Watching Youtube"},
-    {id: 3, name: "Watching Youtube"},
+    // {id: 1, name: "Learning React"},
+    // {id: 2, name: "Watching Youtube"},
+    // {id: 3, name: "Watching Youtube"},
   ])
   const addNewTodo = (name) => {
     const newTodo = {
@@ -31,10 +31,7 @@ const App = () => {
     <div className="todo-container">
       <div className="todo-title">Todo List</div>
       <TodoAdd addNewTodo = {addNewTodo}/>
-      <TodoData 
-      name = {fullname} 
-      age = {age} 
-      data = {data} 
+      <TodoData
       todoList = {todoList}
       />
       <div className="todo-image">
