@@ -14,7 +14,8 @@ const App = () => {
   }
   const [todoList, setTodoList] = useState([
     {id: 1, name: "Learning React"},
-    {id: 2, name: "Watching Youtube"}
+    {id: 2, name: "Watching Youtube"},
+    {id: 3, name: "Watching Youtube"},
   ])
   const addNewTodo = (name) => {
     const newTodo = {
