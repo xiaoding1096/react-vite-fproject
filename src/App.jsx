@@ -3,6 +3,8 @@ import TodoAdd from "./components/todo/TodoAdd";
 import TodoData from "./components/todo/TodoData";
 import reactLogo from "./assets/react.svg";
 import {useState} from "react";
+import Header from "./components/layout/header";
+import Footer from "./components/layout/footer";
 
 
 const App = () => {
@@ -24,22 +26,26 @@ const App = () => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
   return (
-    <div className="todo-container">
-      <div className="todo-title">Todo List</div>
-      <TodoAdd addNewTodo = {addNewTodo}/>
-      {todoList.length > 0 && 
-      
-      <TodoData
-      todoList = {todoList}
-      deleteTodo = {deleteTodo}
-      />
-      }
-      {todoList.length === 0 && 
-        <div className="todo-image">
-          <img src={reactLogo} className="logo"/>
-        </div>
-      }
-    </div>
+    <>
+      <Header/>
+      <div className="todo-container">
+        <div className="todo-title">Todo List</div>
+        <TodoAdd addNewTodo = {addNewTodo}/>
+        {todoList.length > 0 && 
+        
+        <TodoData
+        todoList = {todoList}
+        deleteTodo = {deleteTodo}
+        />
+        }
+        {todoList.length === 0 && 
+          <div className="todo-image">
+            <img src={reactLogo} className="logo"/>
+          </div>
+        }
+      </div>
+      <Footer/>
+    </>
   )
 }
 
