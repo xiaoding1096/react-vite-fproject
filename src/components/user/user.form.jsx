@@ -1,24 +1,32 @@
 import Input from "antd/es/input/Input";
 import "./user.form.css";
-import { Button } from 'antd';
+import { Button , notification } from 'antd';
 import {useState} from "react";
-import axios from "axios";
+import { createUserAPI } from "../../services/api.service";
+
 const UserForm = () => {
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
-    const handleClickBtn = () => {
-        const URL_BACKEND = "http://localhost:8080/api/v1/user";
-        const data = {
-            fullName : fullName,
-            email : email,
-            password : password,
-            phone : phone
-        }
-        axios.post(URL_BACKEND, data);
-        console.log("Check State:", {fullName, email, password, phone});
+    const handleClickBtn = async () => {
+       const res = await createUserAPI(fullName, email, password, phone);
+       if(res.data){
+        notification.success({
+            message: "Create user",
+            description: "Create user success"
+        })
+       }else {
+        notification.error({
+            message: "Error Create user",
+            description: JSON.stringify(res.message)
+        })
+       }
+       
+
+       console.log(">>check res:", res.data)
     }
+
     return (
         <div className="user-form">
             <div>
