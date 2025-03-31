@@ -1,12 +1,25 @@
 import UserForm from "../components/user/user.form";
 import UserTable from "../components/user/user.table";
+import { fetchAllUsersAPI } from '../services/api.service';
+import { useEffect, useState } from 'react';
 
 const UsersPage = () => {
+     const [dataUsers, setDataUsers] = useState([]);
+      useEffect(() => {
+        loadUser();
+      }, []);
+    
+  
+      const loadUser = async () => {
+        const res = await fetchAllUsersAPI()
+        setDataUsers(res.data.data);
+      }
+
     return (
         <>
             <div>
-                <UserForm/>
-                <UserTable/>
+                <UserForm loadUser = {loadUser}/>
+                <UserTable dataUsers= {dataUsers}/>
             </div>
         </>
     )
