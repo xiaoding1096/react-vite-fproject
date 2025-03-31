@@ -1,6 +1,6 @@
 import Input from "antd/es/input/Input";
 import "./user.form.css";
-import { Button , notification } from 'antd';
+import { Button , notification , Modal} from 'antd';
 import {useState} from "react";
 import { createUserAPI } from "../../services/api.service";
 
@@ -9,27 +9,44 @@ const UserForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
-    const handleClickBtn = async () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleSubmitBtn = async () => {
        const res = await createUserAPI(fullName, email, password, phone);
        if(res.data){
         notification.success({
             message: "Create user",
             description: "Create user success"
         })
+        setIsModalOpen(false);
        }else {
         notification.error({
             message: "Error Create user",
             description: JSON.stringify(res.message)
         })
        }
-       
-
        console.log(">>check res:", res.data)
     }
 
     return (
         <div className="user-form">
             <div>
+                <div className="user-form-button">
+                    <h3>Table Users</h3>
+                    <Button 
+                    type="primary"
+                    onClick={() => {setIsModalOpen(true)}}
+                    >Create User</Button>
+                </div>
+            </div>
+            <Modal 
+            title="Basic Modal" 
+            open={isModalOpen} 
+            onOk={() => handleSubmitBtn()} 
+            onCancel={() => setIsModalOpen(false)}
+            maskClosable={false}
+            okText="Create"
+            >
                 <div className="user-form-item">
                     <span>Fullname</span>
                     <Input 
@@ -57,13 +74,7 @@ const UserForm = () => {
                     onChange={(event) => {setPhone(event.target.value)}}
                     />
                 </div>
-                <div className="user-form-button">
-                    <Button 
-                    type="primary"
-                    onClick={handleClickBtn}
-                    >Create User</Button>
-                </div>
-            </div>
+            </Modal>    
         </div>
     )
 }
