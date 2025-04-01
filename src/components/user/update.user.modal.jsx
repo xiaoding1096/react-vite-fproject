@@ -1,13 +1,22 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Input, notification , Modal} from 'antd';
 import { createUserAPI } from "../../services/api.service";
 
-const UpdateUserModal = () => {
+const UpdateUserModal = (props) => {
         const [fullName, setFullName] = useState("");
-        const [email, setEmail] = useState("");
-        const [password, setPassword] = useState("");
+        const [id, setID] = useState("");
         const [phone, setPhone] = useState("");
-        const [isModalOpen, setIsModalOpen] = useState(true);
+        const {isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, setDataUpdate} = props;
+
+        useEffect(() => {
+            console.log("Check dataUpdate:", dataUpdate)
+            if(dataUpdate) {
+                setFullName(dataUpdate.fullName);
+                setID(dataUpdate._id);
+                setPhone(dataUpdate.phone);
+                setDataUpdate(null);
+            }
+        },[dataUpdate])
 
         const handleSubmitBtn = async () => {
             const res = await createUserAPI(fullName, email, password, phone);
@@ -28,40 +37,32 @@ const UpdateUserModal = () => {
          }
      
          const resetAndCloseModal = () => {
-             setIsModalOpen(false);
+             setIsModalUpdateOpen(false);
              setFullName("");
-             setEmail("");
-             setPassword("");
              setPhone("");
+             setID("");
          }
     return (
         <Modal 
             title="Update User" 
-            open={isModalOpen} 
+            open={isModalUpdateOpen} 
             onOk={() => handleSubmitBtn()} 
             onCancel={() => resetAndCloseModal()}
             maskClosable={false}
             okText="Save"
             >
                 <div className="user-form-item">
+                    <span>ID</span>
+                    <Input 
+                    value={id}
+                    disabled
+                    />
+                </div>
+                <div className="user-form-item">
                     <span>Fullname</span>
                     <Input 
                     value={fullName} 
                     onChange={(event) => setFullName(event.target.value)}/>
-                </div>
-                <div className="user-form-item">
-                    <span>Email</span>
-                    <Input 
-                    value={email}
-                    onChange={(event) => {setEmail(event.target.value)}}
-                    />
-                </div>
-                <div className="user-form-item">
-                    <span>Password</span>
-                    <Input.Password 
-                    value={password}
-                    onChange={(event) => {setPassword(event.target.value)}}
-                    />
                 </div>
                 <div className="user-form-item">
                     <span>Phone</span>
