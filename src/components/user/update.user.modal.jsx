@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Input, notification , Modal} from 'antd';
-import { createUserAPI, updateUserAPI } from "../../services/api.service";
+import { updateUserAPI } from "../../services/api.service";
 
 const UpdateUserModal = (props) => {
         const [fullName, setFullName] = useState("");
@@ -9,7 +9,6 @@ const UpdateUserModal = (props) => {
         const {isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, setDataUpdate, loadUser} = props;
 
         useEffect(() => {
-            console.log("Check dataUpdate:", dataUpdate)
             if(dataUpdate) {
                 setFullName(dataUpdate.fullName);
                 setID(dataUpdate._id);
@@ -17,15 +16,15 @@ const UpdateUserModal = (props) => {
                 setDataUpdate(null);
             }
         },[dataUpdate])
-
+        
         const handleSubmitBtn = async () => {
-            const res = await updateUserAPI(id,fullName, phone);
+            const res = await updateUserAPI(id, fullName, phone);
             if(res.data){
              notification.success({
                  message: "Update user",
                  description: "Update user success"
              })
-             resetAndCloseModal();
+             resetAndCloseEditModal();
              await loadUser();
             }else {
              notification.error({
@@ -36,18 +35,18 @@ const UpdateUserModal = (props) => {
             console.log(">>check res:", res.data)
          }
      
-         const resetAndCloseModal = () => {
-             setIsModalUpdateOpen(false);
+         const resetAndCloseEditModal = () => {
+            setIsModalUpdateOpen(false);
              setFullName("");
              setPhone("");
-             setID("");
+             
          }
     return (
         <Modal 
             title="Update User" 
             open={isModalUpdateOpen} 
             onOk={() => handleSubmitBtn()} 
-            onCancel={() => resetAndCloseModal()}
+            onCancel={() => resetAndCloseEditModal()}
             maskClosable={false}
             okText="Save"
             >

@@ -12,7 +12,7 @@ const UsersPage = () => {
   
       const loadUser = async () => {
         const res = await fetchAllUsersAPI()
-        setDataUsers(res.data.data);
+        setDataUsers(res.data);
       }
 
     return (

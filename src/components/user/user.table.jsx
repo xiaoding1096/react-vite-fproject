@@ -39,6 +39,7 @@ const UserTable = (props) => {
               onClick = {() => {
                 setDataDetail(record);
                 setIsDetailOpen(true);
+                console.log(record)
               }}
               >{record._id}</a>
             )
